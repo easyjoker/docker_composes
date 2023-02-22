@@ -9,8 +9,8 @@
 1. 增加 node: 
 redis-cli -h ${redis-node1-hostname} -p ${redis-node1-port} cluster meet ${redis-node2-hostname} ${redis-node2-port}
 2. 分配插槽 (0-16383): 
-    - redis-cli -p ${redis-node1-port}  cluster addslots {0..8191}
-    - redis-cli -p ${redis-node2-port}  cluster addslots {8192..16383}
+    - redis-cli -h ${redis-node1-hostname} -p ${redis-node1-port}  cluster addslots {0..8191}
+    - redis-cli -h ${redis-node1-hostname} -p ${redis-node2-port}  cluster addslots {8192..16383}
 3. 加入 slave 节点到主节点:
     - 进入到 slave 节点中
     - cluster replicate ${redis-master-node-id}
