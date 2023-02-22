@@ -1,0 +1,37 @@
+version: '3'
+services:
+  redis-cluster-1:
+    restart: always
+    container_name: redis-cluster-1
+    image: redis:alpine
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - /data/redis-cluster1-data:/data
+      - ./redis-cluster-1.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      TZ: "Asia/Shanghai"
+    network_mode: "host"
+  redis-cluster-2:
+    restart: always
+    container_name: redis-cluster-2
+    image: redis:alpine
+    command: redis-server /usr/local/etc/redis/redis.conf 
+    volumes:
+      - /data/redis-cluster2-data:/data
+      - ./redis-cluster-2.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      TZ: "Asia/Shanghai"
+    network_mode: "host"
+  redis-cluster-3:
+    restart: always
+    container_name: redis-cluster-3
+    image: redis:alpine
+    command: redis-server /usr/local/etc/redis/redis.conf 
+    volumes:
+      - /data/redis-cluster3-data:/data
+      - ./redis-cluster-3.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      TZ: "Asia/Shanghai"
+    network_mode: "host"    
+    
+  

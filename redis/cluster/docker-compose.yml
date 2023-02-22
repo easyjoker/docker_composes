@@ -1,0 +1,70 @@
+# version: '3'
+services:  
+  redis-sentinel-1:
+    network_mode: "host"
+    restart: always
+    container_name: redis-sentinel-1
+    image: redis:alpine
+    # ports:
+    #   - 6379:6379
+    #   - 26379:26379
+    command: redis-server /usr/local/etc/redis/redis.conf
+    # command: redis-sentinel /usr/local/etc/redis/sentinel.conf  
+    volumes:
+      - /data/redis1-data:/data
+      - ./sentinel1.conf:/usr/local/etc/redis/sentinel.conf
+      - ./redis-master.conf:/usr/local/etc/redis/redis.conf
+    # networks:
+    #   - redis_net
+    
+    environment:
+      TZ: "Asia/Shanghai"
+  redis-sentinel-2:
+    network_mode: "host"
+    restart: always
+    container_name: redis-sentinel-2
+    image: redis:alpine
+    # ports:
+    #   - 6380:6379
+    #   - 26380:26379
+    # command: redis-sentinel /usr/local/etc/redis/sentinel.conf  
+    command: redis-server /usr/local/etc/redis/redis.conf 
+    volumes:
+      - /data/redis2-data:/data
+      - ./sentinel2.conf:/usr/local/etc/redis/sentinel.conf
+      - ./redis-slave1.conf:/usr/local/etc/redis/redis.conf
+    # networks:
+    #   - redis_net
+    
+    environment:
+      TZ: "Asia/Shanghai"
+    depends_on:
+      - redis--sentinel-1
+  redis--sentinel-3:
+    network_mode: "host"
+    restart: always
+    container_name: redis-sentinel-3
+    image: redis:alpine
+    # ports:
+    #   - 6381:6379
+    #   - 26381:26379
+    # command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    command: redis-server /usr/local/etc/redis/redis.conf 
+    volumes:
+      - /data/redis3-data:/data
+      - ./sentinel3.conf:/usr/local/etc/redis/sentinel.conf
+      - ./redis-slave2.conf:/usr/local/etc/redis/redis.conf
+    # networks:
+    #   - redis_net
+    
+    environment:
+      TZ: "Asia/Shanghai"
+    depends_on:
+      - redis-server-master
+# networks:
+#   redis_net:
+#     external: true
+
+    
+    
+  
