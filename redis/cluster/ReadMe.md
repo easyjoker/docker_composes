@@ -17,3 +17,4 @@ redis-cli -h ${redis-node1-hostname} -p ${redis-node1-port} cluster meet ${redis
     ![alt redis-node-id 示意图](node-id.png
     )
 4. 当其中的某个master 节点离线后，如果没有自动将 slave 变成 master，则今入该 slave 然后使用  cluster failover takeover
+5. master 节点需要至少有三台，否则自动选举机制会有问题
